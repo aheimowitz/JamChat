@@ -35,7 +35,7 @@ public class Messaging extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.messaging);
 
-		// Receive the Nick from previous activity
+		// Receive the Nickname from previous activity
 		Bundle extras = getIntent().getExtras();
 		nick = extras.getString("nick");
 
@@ -43,8 +43,9 @@ public class Messaging extends Activity {
 		Button loginButton = (Button) findViewById(R.id.sendButton);
 		loginButton.setOnClickListener(sendButtonListener);
 		
+		//add the adapter array to the listview object listView1
 		lv = (ListView) findViewById(R.id.listView1);
-		adapter = new ChatRoomArrayAdapter(getApplicationContext(), R.layout.listitem_discuss);
+		adapter = new ChatRoomArrayAdapter(getApplicationContext(), R.layout.messaging);
 		lv.setAdapter(adapter);
 	}
 
@@ -62,7 +63,7 @@ public class Messaging extends Activity {
 			EditText userTypedMessage = (EditText) findViewById(R.id.userMessageBox);
 			userMessage = userTypedMessage.getText().toString();
 			localMessage(userMessage);
-
+			
 			// Clear the field..
 			userTypedMessage.setText("");
 
@@ -89,6 +90,7 @@ public class Messaging extends Activity {
 	public void localMessage(String message) {
 		disableSendButton(); //May not be necessary
 		adapter.add(new ChatMessage(false, message));
+		lv.setSelection(adapter.getCount());
 		enableSendButton();
 	}
 

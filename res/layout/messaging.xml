@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="bottom"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/greyishwhite" >
 
     <ListView
         android:id="@+id/listView1"
@@ -11,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/form"
         android:layout_alignParentTop="true" 
-        android:divider="@android:color/transparent"/>
+        android:divider="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:listSelector="@android:color/transparent"/>
 
     <RelativeLayout
         android:id="@+id/form"
@@ -50,6 +53,11 @@
             android:layout_weight="1"
             android:hint="@string/userMessageBoxHint"
             android:inputType="text" />
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
         <Button
             android:id="@+id/sendButton"

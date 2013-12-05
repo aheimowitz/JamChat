@@ -61,7 +61,7 @@ public class Messaging extends Activity {
 	private OnClickListener sendButtonListener = new OnClickListener() {
 		public void onClick(View v) {
 			EditText userTypedMessage = (EditText) findViewById(R.id.userMessageBox);
-			userMessage = userTypedMessage.getText().toString();
+			userMessage = " " + userTypedMessage.getText().toString() + " ";
 			localMessage(userMessage);
 			
 			// Clear the field..

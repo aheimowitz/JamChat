@@ -1,25 +1,16 @@
 package com.example.jamchat;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import com.example.jamchat.ChatMessage;
 import com.example.jamchat.ChatRoomArrayAdapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class Messaging extends Activity {
 	// Settings

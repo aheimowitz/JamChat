@@ -51,10 +51,10 @@ public class ChatRoomArrayAdapter extends ArrayAdapter<ChatMessage> {
 
 		messageView = (TextView) row.findViewById(R.id.comment);
 
-		messageView.setText(coment.comment);
+		messageView.setText(coment.getComment());
 
-		messageView.setBackgroundResource(coment.left ? R.drawable.bubble_yellow : R.drawable.bubble_green);
-		wrapper.setGravity(coment.left ? Gravity.LEFT : Gravity.RIGHT);
+		messageView.setBackgroundResource(coment.getLeft() ? R.drawable.bubble_yellow : R.drawable.bubble_green);
+		wrapper.setGravity(coment.getLeft() ? Gravity.LEFT : Gravity.RIGHT);
 
 		return row;
 	}

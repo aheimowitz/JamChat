@@ -1,5 +1,8 @@
 package com.example.jamchat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.jamchat.wifiDirect.WiFi_DeviceActionListenerInterface;
 import com.example.jamchat.wifiDirect.WiFi_DirectBroadcastReceiver;
 
@@ -9,6 +12,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -18,7 +22,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class Main extends Activity implements WiFi_DeviceActionListenerInterface, ChannelListener
@@ -32,7 +38,8 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 		private Channel channel;
 		private BroadcastReceiver receiver = null;
 		
-		private PeerListListener pListener;
+		private List<WifiP2pDevice> listOfPeers = new ArrayList<WifiP2pDevice>();
+		private WifiP2pDevice[] p2pDeviceArray = {}; 
 	
 		@Override
 		protected void onCreate(Bundle savedInstanceState) 
@@ -72,6 +79,38 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	        unregisterReceiver(receiver);
 	    }
 
+	    private PeerListListener pListener = new PeerListListener()
+	    {
+			@Override
+			public void onPeersAvailable(WifiP2pDeviceList peers) 
+			{
+				//Clears the previous list of peers
+				listOfPeers.clear();
+				
+				//Add all of the peers found (if any) to the ArrayList
+				listOfPeers.addAll(peers.getDeviceList());
+				
+				if(listOfPeers.size() == 0)
+				{
+                    Toast.makeText(Main.this, "No Peers Found",
+                            Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+                    Toast.makeText(Main.this, "Peers Discovered",
+                            Toast.LENGTH_SHORT).show();	
+                    
+                    setContentView(R.layout.connection);
+                    
+                    ListView listV = (ListView)findViewById(R.id.groupsList);
+                    p2pDeviceArray = (WifiP2pDevice[]) listOfPeers.toArray(new WifiP2pDevice[0]);
+                    
+                    listV.setAdapter(new ArrayAdapter<WifiP2pDevice>(Main.this, android.R.layout.simple_list_item_1,   p2pDeviceArray));
+				}
+			}
+	    	
+	    };
+	    
 		/**
 		 * This is the OnClickListener for the discover peers button
 		 */
@@ -109,12 +148,10 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 				}
 				
 			}
-			
-			
 		};
 		
 		/**
-		 * This is the setter for setting the boolean indicating if wifiP2P is enableds
+		 * This is the setter for setting the boolean indicating if wifiP2P is enables
 		 * @param isWifiP2pEnabled
 		 */
 	    public void setIsWifiP2pEnabled(boolean isWifiP2pEnabled)

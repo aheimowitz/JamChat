@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.jamchat.R;
-import com.example.jamchat.R.drawable;
-import com.example.jamchat.R.id;
-import com.example.jamchat.R.layout;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,14 +57,14 @@ public class ChatRoomArrayAdapter extends ArrayAdapter<ChatMessage>
 
 		wrapper = (LinearLayout) row.findViewById(R.id.wrapper);
 
-		ChatMessage coment = getItem(position);
+		ChatMessage comment = getItem(position);
 
 		messageView = (TextView) row.findViewById(R.id.comment);
 
-		messageView.setText(coment.getComment());
+		messageView.setText(comment.getComment());
 
-		messageView.setBackgroundResource(coment.getLeft() ? R.drawable.bubble_yellow : R.drawable.bubble_green);
-		wrapper.setGravity(coment.getLeft() ? Gravity.LEFT : Gravity.RIGHT);
+		messageView.setBackgroundResource(comment.getLeft() ? R.drawable.bubble_yellow : R.drawable.bubble_green);
+		wrapper.setGravity(comment.getLeft() ? Gravity.LEFT : Gravity.RIGHT);
 
 		return row;
 	}

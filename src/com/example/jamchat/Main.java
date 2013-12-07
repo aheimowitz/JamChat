@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.jamchat.wifiDirect.WiFi_DeviceActionListenerInterface;
 import com.example.jamchat.wifiDirect.WiFi_DirectBroadcastReceiver;
+import com.example.jamchat.wifiDirect.WiFi_PeersListAdapter;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -104,9 +105,10 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	                    
 	                    ListView listV = (ListView)findViewById(R.id.groupsList);
 	                    
-	                    p2pDeviceArray = (WifiP2pDevice[]) listOfPeers.toArray(new WifiP2pDevice[0]);
+	                    WiFi_PeersListAdapter tempAdapt = new WiFi_PeersListAdapter(Main.this, android.R.layout.simple_list_item_1);
+	                    tempAdapt.addAll(listOfPeers);
 	                    
-	                    listV.setAdapter(new ArrayAdapter<WifiP2pDevice>(Main.this, android.R.layout.simple_list_item_1,   p2pDeviceArray));
+	                    listV.setAdapter(tempAdapt);
 	                    
 					}
 				}

@@ -14,36 +14,56 @@ public final class R {
         public static final int ICSblue=0x7f040009;
         public static final int appBlack=0x7f040008;
         public static final int appBlue=0x7f040003;
+        public static final int ark=0x7f040010;
+        public static final int ark2=0x7f040011;
+        public static final int black=0x7f04000b;
+        public static final int blue=0x7f04000c;
+        public static final int blue2=0x7f040018;
+        public static final int blue25=0x7f040019;
+        public static final int dark=0x7f04000d;
         public static final int downloadButtonColor=0x7f040000;
+        public static final int gray7=0x7f040012;
+        public static final int gray8=0x7f040013;
         public static final int grey=0x7f040006;
+        public static final int grey05=0x7f04001a;
         public static final int greyishwhite=0x7f040005;
         public static final int loginButtonColor=0x7f040001;
         public static final int openButtonColor=0x7f040002;
+        public static final int orange4=0x7f040016;
+        public static final int orange5=0x7f040017;
         public static final int red=0x7f040007;
+        public static final int sark=0x7f04000e;
+        public static final int sark2=0x7f04000f;
         public static final int transpWhiteBg=0x7f04000a;
         public static final int white=0x7f040004;
+        public static final int white1=0x7f04001b;
+        public static final int white2=0x7f04001c;
+        public static final int yellow1=0x7f040014;
+        public static final int yellow2=0x7f040015;
     }
     public static final class drawable {
         public static final int bubble_green=0x7f020000;
         public static final int bubble_yellow=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int phone=0x7f020003;
+        public static final int button_bg=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int phone=0x7f020004;
     }
     public static final class id {
-        public static final int comment=0x7f080009;
+        public static final int comment=0x7f08000a;
         public static final int discover_peers=0x7f080005;
         public static final int editText1=0x7f080002;
         public static final int form=0x7f080001;
-        public static final int groupMessageBox=0x7f08000a;
-        public static final int groupsList=0x7f080007;
+        public static final int groupMessageBox=0x7f08000b;
+        public static final int groupsList=0x7f080008;
         public static final int listView1=0x7f080000;
-        public static final int menu_settings=0x7f08000d;
+        public static final int list_content=0x7f080007;
+        public static final int menu_settings=0x7f08000e;
         public static final int nameEditText=0x7f080003;
-        public static final int sendButton=0x7f08000c;
+        public static final int sendButton=0x7f08000d;
         public static final int textView1=0x7f080006;
         public static final int useThisButton=0x7f080004;
-        public static final int userMessageBox=0x7f08000b;
-        public static final int wrapper=0x7f080008;
+        public static final int userMessageBox=0x7f08000c;
+        public static final int wrapper=0x7f080009;
     }
     public static final class layout {
         public static final int activity_discuss=0x7f030000;

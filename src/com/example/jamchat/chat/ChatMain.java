@@ -1,4 +1,9 @@
-package com.example.jamchat;
+package com.example.jamchat.chat;
+
+import com.example.jamchat.R;
+import com.example.jamchat.R.id;
+import com.example.jamchat.R.layout;
+import com.example.jamchat.R.menu;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends Activity
+public class ChatMain extends Activity
 {
 	public static final String TAG = "jamchat";
 	

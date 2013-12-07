@@ -1,7 +1,12 @@
-package com.example.jamchat;
+package com.example.jamchat.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.jamchat.R;
+import com.example.jamchat.R.drawable;
+import com.example.jamchat.R.id;
+import com.example.jamchat.R.layout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,8 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ChatRoomArrayAdapter extends ArrayAdapter<ChatMessage> {
-
+public class ChatRoomArrayAdapter extends ArrayAdapter<ChatMessage> 
+{
 	private TextView messageView;
 	private List<ChatMessage> messages = new ArrayList<ChatMessage>();
 	private LinearLayout wrapper;

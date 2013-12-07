@@ -1,5 +1,8 @@
 package com.example.jamchat;
 
+import com.example.jamchat.wifiDirect.WiFi_DeviceActionListenerInterface;
+import com.example.jamchat.wifiDirect.WiFi_DirectBroadcastReceiver;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,15 +13,17 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.ChannelListener;
+import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class Connect extends Activity implements WiFi_DeviceActionListenerInterface, ChannelListener
+public class Main extends Activity implements WiFi_DeviceActionListenerInterface, ChannelListener
 {
+		public static final String TAG = "Jam Chat";
 		private WifiP2pManager manager;
 		private boolean isWifiP2pEnabled = false;
 		private boolean retryChannel = false;
@@ -26,6 +31,8 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 		private final IntentFilter intentFilter = new IntentFilter();
 		private Channel channel;
 		private BroadcastReceiver receiver = null;
+		
+		private PeerListListener pListener;
 	
 		@Override
 		protected void onCreate(Bundle savedInstanceState) 
@@ -48,14 +55,22 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 	        manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
 	        channel = manager.initialize(this, getMainLooper(), null);
 		}
-
-		@Override
-		public boolean onCreateOptionsMenu(Menu menu) 
-		{
-			// Inflate the menu; this adds items to the action bar if it is present.
-			getMenuInflater().inflate(R.menu.activity_main, menu);
-			return true;
-		}
+		
+		/** register the BroadcastReceiver with the intent values to be matched */
+	    @Override
+	    public void onResume()
+	    {
+	        super.onResume();
+	        receiver = new WiFi_DirectBroadcastReceiver(manager, channel, this);
+	        registerReceiver(receiver, intentFilter);
+	    }
+	    
+	    @Override
+	    public void onPause() 
+	    {
+	        super.onPause();
+	        unregisterReceiver(receiver);
+	    }
 
 		/**
 		 * This is the OnClickListener for the discover peers button
@@ -66,54 +81,42 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 			{
 				if (!isWifiP2pEnabled) 
 	            {
-	                    Toast.makeText(Connect.this, R.string.p2p_off_warning,
+	                    Toast.makeText(Main.this, R.string.p2p_off_warning,
 	                            Toast.LENGTH_SHORT).show();
 	            }
 				else
 				{
+					//Attempt to discover peers
 					manager.discoverPeers(channel, new WifiP2pManager.ActionListener() 
 	                {
 	                    @Override
 	                    public void onSuccess() 
 	                    {
-	                        Toast.makeText(Connect.this, "Wifi discovery Initiated",
+	                        Toast.makeText(Main.this, "Wifi discovery Initiated",
 	                                Toast.LENGTH_SHORT).show();
+	                        
+	                        //Request the peers
+	                        manager.requestPeers(channel, pListener);
 	                    }
 	
 	                    @Override
 	                    public void onFailure(int reasonCode) 
 	                    {
-	                        Toast.makeText(Connect.this, "Discovery Failed : " + reasonCode,
+	                        Toast.makeText(Main.this, "Discovery Failed : " + reasonCode,
 	                                Toast.LENGTH_SHORT).show();
 	                    }
 	                });
 				}
 				
 			}
+			
+			
 		};
 		
-		
-		/** register the BroadcastReceiver with the intent values to be matched */
-	    @Override
-	    public void onResume()
-	    {
-	        super.onResume();
-	        //receiver = new WiFi_DirectBroadcastReceiver(manager, channel, this);
-	       // registerReceiver(receiver, intentFilter);
-	    }
-	    
-	    @Override
-	    public void onPause() 
-	    {
-	        super.onPause();
-	        unregisterReceiver(receiver);
-	    }
-
-		
-		
-	    /**
-	     * @param isWifiP2pEnabled the isWifiP2pEnabled to set
-	     */
+		/**
+		 * This is the setter for setting the boolean indicating if wifiP2P is enableds
+		 * @param isWifiP2pEnabled
+		 */
 	    public void setIsWifiP2pEnabled(boolean isWifiP2pEnabled)
 	    {
 	        this.isWifiP2pEnabled = isWifiP2pEnabled;
@@ -133,7 +136,7 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 	            @Override
 	            public void onFailure(int reason) 
 	            {
-	                Toast.makeText(Connect.this, "Connect failed. Retry.",
+	                Toast.makeText(Main.this, "Connect failed. Retry.",
 	                        Toast.LENGTH_SHORT).show();
 	            }
 	        });
@@ -142,9 +145,7 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 	    @Override
 	    public void disconnect() 
 	    {
-	       /* final DeviceDetailFragment fragment = (DeviceDetailFragment) getFragmentManager()
-	                .findFragmentById(R.id.frag_detail);
-	        fragment.resetViews();
+	    	//Modify list of peers/change stuff as possible
 	        manager.removeGroup(channel, new ActionListener() 
 	        {
 	            @Override
@@ -156,10 +157,11 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 	            @Override
 	            public void onSuccess() 
 	            {
-	                fragment.getView().setVisibility(View.GONE);
+	            	//Change view or form
+	                //fragment.getView().setVisibility(View.GONE);
 	            }
 
-	        });*/
+	        });
 	    }
 
 	    @Override

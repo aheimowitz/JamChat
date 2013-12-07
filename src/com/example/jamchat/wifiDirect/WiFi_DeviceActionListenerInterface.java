@@ -1,4 +1,4 @@
-package com.example.jamchat;
+package com.example.jamchat.wifiDirect;
 
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;

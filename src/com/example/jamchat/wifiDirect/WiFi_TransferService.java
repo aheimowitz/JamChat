@@ -1,6 +1,6 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
 
-package com.example.jamchat;
+package com.example.jamchat.wifiDirect;
 
 import android.app.IntentService;
 import android.content.ContentResolver;
@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+
+import com.example.jamchat.chat.ChatMain;
 
 /**
  * A service that process each file transfer request i.e Intent by opening a
@@ -58,13 +60,13 @@ public class WiFi_TransferService extends IntentService
             int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
 
             try {
-                Log.d(MainActivity.TAG, "Opening client socket - ");
+                Log.d(ChatMain.TAG, "Opening client socket - ");
                 
                 //Sets the socket to the proper port number and address
                 socket.bind(null);
                 socket.connect((new InetSocketAddress(host, port)), SOCKET_TIMEOUT);
 
-                Log.d(MainActivity.TAG, "Client socket - " + socket.isConnected());
+                Log.d(ChatMain.TAG, "Client socket - " + socket.isConnected());
                 OutputStream stream = socket.getOutputStream();
                 ContentResolver cr = context.getContentResolver();
                 InputStream is = null;
@@ -76,7 +78,7 @@ public class WiFi_TransferService extends IntentService
                 }
                 catch (FileNotFoundException e) 
                 {
-                    Log.d(MainActivity.TAG, e.toString());
+                    Log.d(ChatMain.TAG, e.toString());
                 }
                 
                 
@@ -86,11 +88,11 @@ public class WiFi_TransferService extends IntentService
                 //DeviceDetailFragment.copyText(is, stream);
                 
                 //Writes to the log that data was written successfully to the client
-                Log.d(MainActivity.TAG, "Client: Data written");
+                Log.d(ChatMain.TAG, "Client: Data written");
             } 
             catch (IOException e) 
             {
-                Log.e(MainActivity.TAG, e.getMessage());
+                Log.e(ChatMain.TAG, e.getMessage());
             }
             finally
             {

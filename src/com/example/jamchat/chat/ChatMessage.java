@@ -1,4 +1,4 @@
-package com.example.jamchat;
+package com.example.jamchat.chat;
 
 public class ChatMessage 
 {

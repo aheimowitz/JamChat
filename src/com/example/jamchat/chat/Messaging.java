@@ -1,7 +1,11 @@
-package com.example.jamchat;
+package com.example.jamchat.chat;
 
-import com.example.jamchat.ChatMessage;
-import com.example.jamchat.ChatRoomArrayAdapter;
+import com.example.jamchat.R;
+import com.example.jamchat.R.id;
+import com.example.jamchat.R.layout;
+import com.example.jamchat.R.menu;
+import com.example.jamchat.chat.ChatMessage;
+import com.example.jamchat.chat.ChatRoomArrayAdapter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -19,7 +23,7 @@ public class Messaging extends Activity
 	public static String nick = "default"; //User's nickname
 	public static String userMessage = "";
 	
-	private com.example.jamchat.ChatRoomArrayAdapter adapter;
+	private com.example.jamchat.chat.ChatRoomArrayAdapter adapter;
 	private ListView lv;
 
 	@Override

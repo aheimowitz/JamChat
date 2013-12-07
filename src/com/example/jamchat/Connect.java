@@ -64,6 +64,30 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 		{
 			public void onClick(View v) 
 			{
+				if (!isWifiP2pEnabled) 
+	            {
+	                    Toast.makeText(Connect.this, R.string.p2p_off_warning,
+	                            Toast.LENGTH_SHORT).show();
+	            }
+				else
+				{
+					manager.discoverPeers(channel, new WifiP2pManager.ActionListener() 
+	                {
+	                    @Override
+	                    public void onSuccess() 
+	                    {
+	                        Toast.makeText(Connect.this, "Wifi discovery Initiated",
+	                                Toast.LENGTH_SHORT).show();
+	                    }
+	
+	                    @Override
+	                    public void onFailure(int reasonCode) 
+	                    {
+	                        Toast.makeText(Connect.this, "Discovery Failed : " + reasonCode,
+	                                Toast.LENGTH_SHORT).show();
+	                    }
+	                });
+				}
 				
 			}
 		};

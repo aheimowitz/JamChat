@@ -40,7 +40,7 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 		
 		private List<WifiP2pDevice> listOfPeers = new ArrayList<WifiP2pDevice>();
 		private WifiP2pDevice[] p2pDeviceArray = {}; 
-	
+
 		@Override
 		protected void onCreate(Bundle savedInstanceState) 
 		{
@@ -78,38 +78,40 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	        super.onPause();
 	        unregisterReceiver(receiver);
 	    }
-
-	    private PeerListListener pListener = new PeerListListener()
-	    {
-			@Override
-			public void onPeersAvailable(WifiP2pDeviceList peers) 
-			{
-				//Clears the previous list of peers
-				listOfPeers.clear();
-				
-				//Add all of the peers found (if any) to the ArrayList
-				listOfPeers.addAll(peers.getDeviceList());
-				
-				if(listOfPeers.size() == 0)
+	    
+			private PeerListListener pListener = new PeerListListener()
+		    {
+				@Override
+				public void onPeersAvailable(WifiP2pDeviceList peers) 
 				{
-                    Toast.makeText(Main.this, "No Peers Found",
-                            Toast.LENGTH_SHORT).show();
+					//Clears the previous list of peers
+					listOfPeers.clear();
+					
+					//Add all of the peers found (if any) to the ArrayList
+					listOfPeers.addAll(peers.getDeviceList());
+					
+					if(listOfPeers.size() == 0)
+					{
+	                    Toast.makeText(Main.this, "No Peers Found",
+	                            Toast.LENGTH_SHORT).show();
+					}
+					else
+					{
+	                    Toast.makeText(Main.this, "Peers Discovered",
+	                            Toast.LENGTH_SHORT).show();	
+	                    
+	                    setContentView(R.layout.connection);
+	                    
+	                    ListView listV = (ListView)findViewById(R.id.groupsList);
+	                    
+	                    p2pDeviceArray = (WifiP2pDevice[]) listOfPeers.toArray(new WifiP2pDevice[0]);
+	                    
+	                    listV.setAdapter(new ArrayAdapter<WifiP2pDevice>(Main.this, android.R.layout.simple_list_item_1,   p2pDeviceArray));
+	                    
+					}
 				}
-				else
-				{
-                    Toast.makeText(Main.this, "Peers Discovered",
-                            Toast.LENGTH_SHORT).show();	
-                    
-                    setContentView(R.layout.connection);
-                    
-                    ListView listV = (ListView)findViewById(R.id.groupsList);
-                    p2pDeviceArray = (WifiP2pDevice[]) listOfPeers.toArray(new WifiP2pDevice[0]);
-                    
-                    listV.setAdapter(new ArrayAdapter<WifiP2pDevice>(Main.this, android.R.layout.simple_list_item_1,   p2pDeviceArray));
-				}
-			}
-	    	
-	    };
+		    	
+		    };
 	    
 		/**
 		 * This is the OnClickListener for the discover peers button
@@ -125,6 +127,9 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	            }
 				else
 				{
+					//manager.clearLocalServices(channel, (ActionListener) pListener);
+					//manager.clearServiceRequests(channel, (ActionListener) pListener);
+					
 					//Attempt to discover peers
 					manager.discoverPeers(channel, new WifiP2pManager.ActionListener() 
 	                {

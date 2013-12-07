@@ -20,6 +20,7 @@ public class WiFi_PeersListAdapter
 		//Initializes the class peer list with the peer list passed
 		this.peersList = peersList;
 		
-		
 	}
+	
+	
 }

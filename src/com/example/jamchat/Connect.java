@@ -34,12 +34,9 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 			setContentView(R.layout.connection);
 
 			//Initialize the onClickListener for the exit button
-			Button exitButton = (Button) findViewById(R.id.exit_button);
-			exitButton.setOnClickListener(exitButtonListener);
+			Button discoverButton = (Button) findViewById(R.id.discover_peers);
+			discoverButton.setOnClickListener(discoverPeersButtonListener);
 			
-			//Initialize the onClickListener for the settings button
-			Button settingsButton = (Button) findViewById(R.id.settings_button);
-			settingsButton.setOnClickListener(settingsButtonListener);
 			
 			//Adds the necessary actions to the intentFilter to allow the app to
 			// use Wifi Direct
@@ -61,28 +58,16 @@ public class Connect extends Activity implements WiFi_DeviceActionListenerInterf
 		}
 
 		/**
-		 * This is the OnClickListener for the exit button
+		 * This is the OnClickListener for the discover peers button
 		 */
-		private OnClickListener exitButtonListener = new OnClickListener() 
-		{
-			public void onClick(View v) 
-			{
-				//Exits the application
-				finish();
-			}
-		};
-		
-		/**
-		 * This is the OnClickListener for the settings button
-		 */
-		private OnClickListener settingsButtonListener = new OnClickListener() 
+		private OnClickListener discoverPeersButtonListener = new OnClickListener() 
 		{
 			public void onClick(View v) 
 			{
 				
-
 			}
 		};
+		
 		
 		/** register the BroadcastReceiver with the intent values to be matched */
 	    @Override

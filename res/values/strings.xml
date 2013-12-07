@@ -6,7 +6,11 @@
 
     <!-- Start screen strings -->
     <string name="nameHint">Choose your NickName</string>
-    <string name="useThisButton">Join Chat</string>
+    <string name="joinChat">Join Chat</string>
+    <string name="discover_peers">Discover Peers</string>
+    
+    <string name="settings_button">Settings</string>
+    <string name="exit_button">Exit</string>
 
     <!-- Messaging screen strings -->
     <string name="userMessageBoxHint">Enter your message</string>
@@ -32,6 +36,8 @@
     <string name="group_owner_text">"Am I the Group Owner? "</string>
     <string name="label_me">ME</string>
     <string name="label_peers">PEERS</string>
+    
+    <string name="found_chatrooms">Chatrooms found:</string>
 
 </resources>
 

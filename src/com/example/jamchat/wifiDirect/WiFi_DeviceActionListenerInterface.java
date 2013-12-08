@@ -1,6 +1,5 @@
 package com.example.jamchat.wifiDirect;
 
-import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 
 /**
@@ -13,7 +12,7 @@ public interface WiFi_DeviceActionListenerInterface
 
     void cancelDisconnect();
 
-    void connect(WifiP2pConfig config);
+    void connect(WifiP2pDevice device);
 
     void disconnect();
 }

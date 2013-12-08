@@ -42,25 +42,26 @@ public final class R {
         public static final int yellow2=0x7f040015;
     }
     public static final class drawable {
-        public static final int bubble_green=0x7f020000;
-        public static final int bubble_yellow=0x7f020001;
-        public static final int button_bg=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int phone=0x7f020004;
+        public static final int bubble_blue=0x7f020000;
+        public static final int bubble_green=0x7f020001;
+        public static final int bubble_yellow=0x7f020002;
+        public static final int button_bg=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int phone=0x7f020005;
     }
     public static final class id {
         public static final int comment=0x7f08000a;
+        public static final int create_chatroom=0x7f080006;
         public static final int discover_peers=0x7f080005;
         public static final int editText1=0x7f080002;
         public static final int form=0x7f080001;
         public static final int groupMessageBox=0x7f08000b;
         public static final int groupsList=0x7f080008;
         public static final int listView1=0x7f080000;
-        public static final int list_content=0x7f080007;
         public static final int menu_settings=0x7f08000e;
         public static final int nameEditText=0x7f080003;
         public static final int sendButton=0x7f08000d;
-        public static final int textView1=0x7f080006;
+        public static final int textView1=0x7f080007;
         public static final int useThisButton=0x7f080004;
         public static final int userMessageBox=0x7f08000c;
         public static final int wrapper=0x7f080009;
@@ -80,7 +81,7 @@ public final class R {
         /**  Strings from old wifi direct app 
          */
         public static final int client_text=0x7f050012;
-        public static final int connect_peer_button=0x7f05000c;
+        public static final int create_peer_button=0x7f05000c;
         public static final int disconnect_peer_button=0x7f05000d;
         public static final int discover_peers=0x7f050004;
         public static final int discover_peers_button=0x7f05000b;

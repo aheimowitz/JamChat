@@ -3,6 +3,7 @@ package com.example.jamchat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.jamchat.chat.Messaging;
 import com.example.jamchat.wifiDirect.WiFi_DeviceActionListenerInterface;
 import com.example.jamchat.wifiDirect.WiFi_DirectBroadcastReceiver;
 import com.example.jamchat.wifiDirect.WiFi_PeersListAdapter;
@@ -10,7 +11,9 @@ import com.example.jamchat.wifiDirect.WiFi_PeersListAdapter;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -23,7 +26,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -52,6 +56,10 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 			Button discoverButton = (Button) findViewById(R.id.discover_peers);
 			discoverButton.setOnClickListener(discoverPeersButtonListener);
 			
+			//Initialize the onClickListener for the create chatroom button
+			Button createButton = (Button) findViewById(R.id.create_chatroom);
+			createButton.setOnClickListener(createChatroomListener);
+			
 			
 			//Adds the necessary actions to the intentFilter to allow the app to
 			// use Wifi Direct
@@ -63,6 +71,22 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	        manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
 	        channel = manager.initialize(this, getMainLooper(), null);
 		}
+		
+		/**
+		 * This is the OnClickListener for the discover peers button
+		 */
+		private OnClickListener createChatroomListener = new OnClickListener() 
+		{
+			public void onClick(View v)
+			{
+				Toast.makeText(Main.this, "Creating chatroom",
+                        Toast.LENGTH_SHORT).show();	
+				
+				Intent i = new Intent(Main.this, Messaging.class);
+            	i.putExtra("nick", "default");
+            	startActivityForResult(i,9);
+			}
+		};
 		
 		/** register the BroadcastReceiver with the intent values to be matched */
 	    @Override
@@ -109,6 +133,17 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	                    tempAdapt.addAll(listOfPeers);
 	                    
 	                    listV.setAdapter(tempAdapt);
+	                    listV.setOnItemClickListener(new OnItemClickListener()
+	                    {
+							@Override
+							public void onItemClick(AdapterView<?> arg0,
+									View arg1, int arg2, long arg3) 
+							{
+								//Attempt to connect to the peer that was clicked
+								connect(listOfPeers.get(arg2));
+							}
+	                    	
+	                    });
 	                    
 					}
 				}
@@ -129,16 +164,13 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	            }
 				else
 				{
-					//manager.clearLocalServices(channel, (ActionListener) pListener);
-					//manager.clearServiceRequests(channel, (ActionListener) pListener);
-					
 					//Attempt to discover peers
 					manager.discoverPeers(channel, new WifiP2pManager.ActionListener() 
 	                {
 	                    @Override
 	                    public void onSuccess() 
 	                    {
-	                        Toast.makeText(Main.this, "Wifi discovery Initiated",
+	                        Toast.makeText(Main.this, "Wifi discovery initiated",
 	                                Toast.LENGTH_SHORT).show();
 	                        
 	                        //Request the peers
@@ -167,14 +199,25 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	    }
 	    
 	    @Override
-	    public void connect(WifiP2pConfig config) 
+	    public void connect(WifiP2pDevice device) 
 	    {
+            Toast.makeText(Main.this, "Attempting to connect to peer...",
+                    Toast.LENGTH_SHORT).show();
+	    	
+	    	//These three lines convert the device object into a 
+	    	// WifiP2pConfig object
+	    	WifiP2pConfig config = new WifiP2pConfig();
+	    	config.deviceAddress = device.deviceAddress;
+	    	config.wps.setup = WpsInfo.PBC;
+	      	
 	        manager.connect(channel, config, new ActionListener() 
 	        {
 	            @Override
 	            public void onSuccess() 
 	            {
-	                // WiFiDirectBroadcastReceiver will notify us. Ignore for now.
+	            	Intent i = new Intent(Main.this, Messaging.class);
+	            	i.putExtra("nick", "default");
+	            	startActivityForResult(i,9);
 	            }
 
 	            @Override
@@ -286,14 +329,11 @@ public class Main extends Activity implements WiFi_DeviceActionListenerInterface
 	            fragmentDetails.resetViews();
 	        }*/
 	    }
-	    
-	    
-	    @Override
-	    public void showDetails(WifiP2pDevice device) 
-	    {
-	        //DeviceDetailFragment fragment = (DeviceDetailFragment) getFragmentManager()
-	        //        .findFragmentById(R.id.frag_detail);
-	       // fragment.showDetails(device);
 
-	    }
+		@Override
+		public void showDetails(WifiP2pDevice device) {
+			// TODO Auto-generated method stub
+			
+		}
+	    
 }

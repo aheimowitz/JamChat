@@ -6,7 +6,6 @@ import java.util.List;
 import com.example.jamchat.R;
 import android.content.Context;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 public class WiFi_PeersListAdapter extends ArrayAdapter<WifiP2pDevice>
 {
 	private List<WifiP2pDevice> peersList = new ArrayList<WifiP2pDevice>(); 
-	
-	private LinearLayout wrapper;
 	private TextView messageView;
 
 	/**
@@ -77,12 +74,12 @@ public class WiFi_PeersListAdapter extends ArrayAdapter<WifiP2pDevice>
 			row = inflater.inflate(R.layout.listitem_discuss, parent, false);
 		}
 
-		wrapper = (LinearLayout) row.findViewById(R.id.wrapper);
+		LinearLayout wrapper = (LinearLayout) row.findViewById(R.id.wrapper);
 
 		WifiP2pDevice tempDevice = getItem(position); 
 		
 		messageView = (TextView) row.findViewById(R.id.comment);
-		messageView.setText(tempDevice.toString());
+		messageView.setText(tempDevice.deviceName);
 		
 		return row;
 	}
